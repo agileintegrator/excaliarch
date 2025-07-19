@@ -1,3 +1,5 @@
+![excalidraw-claude-archi](images/excalidraw-claude-archi.png "Excaliarch concept logo")
+
 # Excaliarch
 Excaliarch is a set of tools and methods that use Excalidraw to create, maintain, and exploit Archimate content.
 
