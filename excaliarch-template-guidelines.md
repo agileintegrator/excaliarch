@@ -15,6 +15,17 @@ To get better results from the Excaliarch agent, keep the element type in the na
 
 For example, if you have an API Gateway service, call it "App Service: API Gateway Service".
 
+### Stereotypes (optional)
+
+ArchiMate concepts can be stereotyped — a UML-style annotation in `<<guillemets>>` that adds a sub-classification without inventing a new ArchiMate type. To stereotype an element, put the stereotype on its own line *above* the `Type: name` line:
+
+```
+<<OpenAPI>>
+Artifact: TicDataOpenAPI
+```
+
+Use one stereotype per line. Multiple stereotypes are allowed (stack them on consecutive lines) and are reported in document order on the parsed concept. The reader treats stereotypes as a first-class field separate from the ArchiMate type, so a stereotyped concept comes out as `{archimate_type: "Artifact", stereotypes: ["OpenAPI"], name: "TicDataOpenAPI"}` — not a smushed type string.
+
 ### Relationships
 
 Excalidraw can support all [Archimate 3.1 relationships](https://pubs.opengroup.org/architecture/archimate31-doc/chap05.html#_Toc10045332) out of the box!
