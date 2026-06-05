@@ -29,6 +29,11 @@ Ultimately, we hope Excaliarh will cover the deloyment of any software resources
 
 See also the [Excaliarch Usage Guidelines](excaliarch-template-guidelines.md) for more information on using the template.
 
+## Claude Code skill
+
+The repo ships a Claude Code skill at [`.claude/skills/excaliarch/`](.claude/skills/excaliarch/) that reads Excaliarch-template `.excalidraw` files and lifts them into an ArchiMate-domain JSON model — concepts, relationships, and annotations — that an agent can reason over directly.
+
+See [SKILL.md](.claude/skills/excaliarch/SKILL.md) for the trigger conditions, the labelling convention the reader expects, and how to invoke `reader.py`. Known gaps and follow-ups are tracked in [TODO.md](.claude/skills/excaliarch/TODO.md). v1 is read-only; the writing direction is planned.
 
 ### Artefacts (git)
  - pictures
