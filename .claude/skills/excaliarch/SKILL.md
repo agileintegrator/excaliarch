@@ -66,3 +66,48 @@ resolves bound text, and gives you the ArchiMate-level model directly.
 
 v1: read-only. Writing diagrams from an ArchiMate model is a planned
 extension and out of scope here.
+
+## Example output
+
+For a small architecture diagram, the model the reader prints looks
+like this (trimmed):
+
+```json
+{
+  "source": "architecture/credit-market-datamart.excalidraw",
+  "concepts": [
+    {
+      "id": "WLPSjmoCErhICnRzcSKwl",
+      "archimate_type": "App component",
+      "name": "CreditMarketDatamart",
+      "shape": "rectangle",
+      "position": [580, 240],
+      "size": [220, 80],
+      "stroke": "#1971c2",
+      "fill": "#a5d8ff"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel-1",
+      "from": "WLPSjmoCErhICnRzcSKwl",
+      "to": "AbCDeFg",
+      "stroke_style": "solid",
+      "stroke_width": 2,
+      "start_arrowhead": null,
+      "end_arrowhead": "triangle_outline",
+      "label": null,
+      "archimate_kind": null
+    }
+  ],
+  "annotations": []
+}
+```
+
+## Known limitations
+
+See [TODO.md](TODO.md) alongside this file for the shakedown follow-ups
+— stereotyped labels, unbound relationships, name normalisation, the
+visual-key classification table that would let the reader fill
+`relationships[].archimate_kind`. None of these gate v1 reading;
+they shape v2.

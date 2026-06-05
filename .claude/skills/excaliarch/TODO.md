@@ -43,9 +43,23 @@ Follow-ups deferred from the v1 shakedown against
 - **Writing direction (v2).** Generate an Excaliarch-conformant
   `.excalidraw` file from an ArchiMate model. Already flagged in
   `SKILL.md` under Scope.
-- **Decide the user-global stub story.** The stub at
-  `~/.claude/skills/excaliarch/SKILL.md` lives only on this machine
-  (it's outside any repo). If we want CLI sessions on other machines to
-  resolve `excaliarch` the same way, either turn the stub into a tiny
-  committed installer in this repo, or accept that the canonical
-  in-repo path is the only durable surface.
+- **Distribution: wrap as a plugin for marketplace install.** Anthropic's
+  Agent Skill spec is cross-platform (Claude Code CLI, claude.ai web,
+  Claude API, Claude apps), but Custom Skills don't auto-sync across
+  surfaces — users install once per channel. To enable Claude Code
+  marketplace install (`/plugin marketplace add agileintegrator/excaliarch`
+  → `/plugin install excaliarch`), add a `.claude-plugin/plugin.json`
+  manifest at the repo root. For claude.ai web the install today is
+  "ZIP `.claude/skills/excaliarch/` and upload via Settings →
+  Capabilities → Skills" (UI label varies — also surfaced as
+  Customize → Skills depending on version). The user-global symlink we
+  keep on Timo's Mac is now a CLI convenience, not the canonical
+  distribution path.
+
+- **Validate the skill on each surface.** SKILL.md is spec-compliant
+  on paper (`name` lowercase ≤64, `description` ≤1024, helper script
+  pattern matches docs) but the cross-surface install routes are
+  un-tested end-to-end. First time anyone uploads to claude.ai or the
+  API, confirm the reader executes in that sandbox (it uses Python
+  stdlib only so should work, but "should" is doing real work in that
+  sentence).
