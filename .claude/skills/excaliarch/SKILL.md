@@ -32,9 +32,12 @@ python3 .claude/skills/excaliarch/reader.py <path-to-file.excalidraw>
 
 The reader prints a single JSON document with three arrays:
 
-- `concepts[]` — `id`, `archimate_type`, `name`, `shape`, `position`,
-  `size`, `stroke`, `fill`. `archimate_type` is the text before the first
-  `:` in the bound label; `name` is what follows.
+- `concepts[]` — `id`, `stereotypes`, `archimate_type`, `name`, `shape`,
+  `position`, `size`, `stroke`, `fill`. `archimate_type` is the text
+  before the first `:` in the bound label; `name` is what follows.
+  `stereotypes` is a list of `<<…>>` annotations peeled from lines
+  above the type/name (empty list when none — see the Stereotypes
+  section of `excaliarch-template-guidelines.md`).
 - `relationships[]` — `id`, `from`, `to` (concept ids), `stroke_style`,
   `stroke_width`, `start_arrowhead`, `end_arrowhead`, `label`,
   `archimate_kind` (left `null`; classify downstream from the styling
@@ -78,6 +81,7 @@ like this (trimmed):
   "concepts": [
     {
       "id": "WLPSjmoCErhICnRzcSKwl",
+      "stereotypes": [],
       "archimate_type": "App component",
       "name": "CreditMarketDatamart",
       "shape": "rectangle",
@@ -85,6 +89,17 @@ like this (trimmed):
       "size": [220, 80],
       "stroke": "#1971c2",
       "fill": "#a5d8ff"
+    },
+    {
+      "id": "Qx7vWnB3cR5pTjK9LmFhA",
+      "stereotypes": ["OpenAPI"],
+      "archimate_type": "Artifact",
+      "name": "TicDataOpenAPI",
+      "shape": "rectangle",
+      "position": [820, 240],
+      "size": [220, 80],
+      "stroke": "#2f9e44",
+      "fill": "#b2f2bb"
     }
   ],
   "relationships": [

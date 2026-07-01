@@ -53,9 +53,10 @@ def _extract_concepts(
         label, text_id = _bound_label(el, by_id)
         if text_id:
             used_text_ids.add(text_id)
-        archimate_type, name = _parse_excaliarch_label(label)
+        stereotypes, archimate_type, name = _parse_excaliarch_label(label)
         yield {
             "id": el["id"],
+            "stereotypes": stereotypes,
             "archimate_type": archimate_type,
             "name": name,
             "shape": el["type"],
@@ -125,19 +126,42 @@ def _bound_label(
     return None, None
 
 
-def _parse_excaliarch_label(label: str | None) -> tuple[str | None, str | None]:
-    """Split ``"<Type>: <name>"`` into ``(type, name)``.
+def _parse_excaliarch_label(
+    label: str | None,
+) -> tuple[list[str], str | None, str | None]:
+    """Split a label into ``(stereotypes, type, name)``.
 
-    A label with no ``:`` is treated as a name-only label and returns
-    ``(None, label)``. Whitespace and the line break after the colon are
-    normalised away.
+    Excaliarch labels can optionally carry one or more UML-style
+    stereotypes on their own lines above the ``"<Type>: <name>"`` line —
+    e.g. ``"<<OpenAPI>>\\nArtifact: TicDataOpenAPI"``. Leading ``<<…>>``
+    lines are peeled off into the stereotypes list in document order;
+    the remainder is split on the first ``":"`` into type and name. A
+    label with no ``:`` is treated as name-only and returns
+    ``type=None``. An empty or missing label returns
+    ``([], None, None)``.
     """
     if not label:
-        return None, None
-    head, sep, tail = label.partition(":")
+        return [], None, None
+    lines = label.split("\n")
+    stereotypes: list[str] = []
+    while lines:
+        stripped = lines[0].strip()
+        if (
+            stripped.startswith("<<")
+            and stripped.endswith(">>")
+            and len(stripped) > 4
+        ):
+            stereotypes.append(stripped[2:-2].strip())
+            lines = lines[1:]
+        else:
+            break
+    remainder = "\n".join(lines).strip()
+    if not remainder:
+        return stereotypes, None, None
+    head, sep, tail = remainder.partition(":")
     if not sep:
-        return None, label.strip() or None
-    return (head.strip() or None), (tail.strip() or None)
+        return stereotypes, None, head.strip() or None
+    return stereotypes, (head.strip() or None), (tail.strip() or None)
 
 
 def _endpoint_id(binding: dict[str, Any] | None) -> str | None:

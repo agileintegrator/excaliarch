@@ -6,12 +6,6 @@ Follow-ups deferred from the v1 shakedown against
 
 ## Convention gaps (settle in `excaliarch-template-guidelines.md` first)
 
-- **Stereotypes are not in the labelling convention.** Real diagrams use
-  labels like `"<<OpenAPI>>\nArtifact: TicDataOpenAPI"`. The reader
-  faithfully splits on the first `:`, producing
-  `archimate_type = "<<OpenAPI>>\nArtifact"` — accurate but ugly. Extend
-  the guidelines to specify how stereotypes are written, then teach the
-  parser to peel `<<stereotype>>` into its own field on the concept.
 - **No way to mark a closed shape as structural / decoration.** The
   shakedown found 14 / 24 closed shapes with no typed label — a mix of
   Groupings, visual panels, and possibly Junctions (one was an ellipse).
@@ -63,3 +57,14 @@ Follow-ups deferred from the v1 shakedown against
   API, confirm the reader executes in that sandbox (it uses Python
   stdlib only so should work, but "should" is doing real work in that
   sentence).
+
+## Done
+
+- **Stereotypes** *(2026-06-05).* Convention added to
+  `excaliarch-template-guidelines.md` (new "Stereotypes (optional)"
+  subsection under Naming). Reader's `_parse_excaliarch_label` now
+  peels leading `<<…>>` lines off the label and emits a `stereotypes`
+  list on each concept (empty when none). Verified on the
+  credit-market-datamart shakedown — the three stereotyped `Artifact`
+  concepts now come through with clean `archimate_type: "Artifact"`
+  and the stereotype on its own field.
